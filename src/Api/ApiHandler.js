@@ -276,3 +276,15 @@ export const getHumanFileSize = (bytes) => {
     const e = (Math.log(bytes) / Math.log(1e3)) | 0;
     return +(bytes / Math.pow(1e3, e)).toFixed(2) + ' ' + ('kMGTPEZY'[e - 1] || '') + 'B';
 };
+
+/**
+ * Wrap API response for retrive task list
+ * @returns {Promise}
+ */
+export const getTaskList = () => {
+    return new Promise((resolve, reject) => {
+        return API.tasks()
+            .then(handleFetch(resolve, reject).xthen)
+            .catch(handleFetch(resolve, reject).xcatch)
+    })
+};

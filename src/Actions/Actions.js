@@ -47,6 +47,21 @@ export const refreshFileList = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * Request API to get task list then refresh UI
+ * @returns {Function}
+ */
+export const refreshTaskList = () => (dispatch, getState) => {
+    APIHandler.getTaskList().then(r => {
+        dispatch(setTaskList(r));
+    }).catch(r => {
+        dispatch(setTaskList([]));
+        dispatch({
+            type: 'SET_ERROR_MSG',
+            value: r.toString()
+        })
+    })
+}
 
 /**
  * Request API to get file list for the selected path then refresh UI
@@ -302,6 +317,11 @@ export const resetFileUploader = () => (dispatch, getState) => {
     dispatch(setFileUploadList([]));
 };
 
+export const resetTaskDialog = () => (dispatch, getState) => {
+    dispatch(setVisibleDialogTask(false));
+    dispatch(setTaskList([]));
+}
+
 export const enterToPreviousDirectory = () => (dispatch, getState) => {
     const { path } = getState();
     dispatch(setPath(path.slice(0, -1)));
@@ -360,6 +380,13 @@ export const setFileList = (fileList) => {
         value: fileList
     };
 };
+
+export const setTaskList = (taskList) => {
+    return {
+        type: 'SET_TASK_LIST',
+        value: taskList
+    }
+}
 
 export const setFileListSublist = (fileList) => {
     return {
@@ -476,6 +503,13 @@ export const setVisibleDialogCopy = (visible) => {
 export const setVisibleDialogContent = (visible) => {
     return {
         type: 'SET_VISIBLE_DIALOG_CONTENT',
+        value: !!visible
+    };
+};
+
+export const setVisibleDialogTask = (visible) => {
+    return {
+        type: 'SET_VISIBLE_DIALOG_TASK',
         value: !!visible
     };
 };

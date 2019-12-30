@@ -136,3 +136,11 @@ export function upload(path, fileList, formData = new FormData()) {
         }
     });
 };
+
+/**
+ * Fetch API to tasks list
+ * @returns {Object}
+ */
+export function tasks() {
+    return fetch(config.url_task_list)
+}

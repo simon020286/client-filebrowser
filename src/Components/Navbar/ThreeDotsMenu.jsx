@@ -5,6 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import CreateFolderAction from '../ContextMenu/ContextMenuActions/CreateFolderAction.jsx';
 import UploadFileAction from '../ContextMenu/ContextMenuActions/UploadFileAction.jsx';
+import TaskAction from '../ContextMenu/ContextMenuActions/TaskAction.jsx';
 
 class ThreeDotsMenu extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class ThreeDotsMenu extends React.Component {
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
           <CreateFolderAction handleClose={this.handleClose} />
           <UploadFileAction handleClose={this.handleClose} />
+          <TaskAction handleClose={this.handleClose} />
         </Menu>
       </div>
     );

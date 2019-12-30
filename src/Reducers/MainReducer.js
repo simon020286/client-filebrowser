@@ -19,9 +19,11 @@ export const defaultState = {
     visibleDialogMove: false,
     visibleDialogCopy: false,
     visibleDialogRename: false,
+    visibleDialogTask: false,
     fileContentBlobUrl: null,
     fileUploadProgress: 0,
-    fileUploadList: []
+    fileUploadList: [],
+    taskList: []
 };
 
 /**
@@ -47,6 +49,10 @@ const MainReducer = (state = defaultState, action) => {
         case 'ENTER_TO_DIRECTORY_SUB_LIST':
             return Object.assign({}, state, {
                 pathSublist: [...state.pathSublist, action.value]
+            });
+        case 'SET_TASK_LIST':
+            return Object.assign({}, state, {
+                taskList: action.value
             });
         case 'SET_FILE_LIST':
             return Object.assign({}, state, {
@@ -136,6 +142,10 @@ const MainReducer = (state = defaultState, action) => {
             return Object.assign({}, state, { 
                 visibleDialogRename: !!action.value
             });
+        case 'SET_VISIBLE_DIALOG_TASK': 
+            return Object.assign({}, state, {
+                visibleDialogTask: !!action.value
+            })
         case 'SET_FILE_UPLOAD_LIST':
             return Object.assign({}, state, {
                 fileUploadList: action.value

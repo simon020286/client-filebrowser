@@ -6,6 +6,7 @@ import DialogRename from './Rename/Rename.jsx';
 import DialogMove from './Move/Move.jsx';
 import DialogCopy from './Copy/Copy.jsx';
 import DialogUploadFile from './UploadFile/UploadFile.jsx';
+import DialogTask from './Task/Task.jsx';
 
 function Dialogs(props) {
     return (
@@ -17,6 +18,7 @@ function Dialogs(props) {
             <DialogCopy />
             <DialogRename />
             <DialogUploadFile />
+            <DialogTask />
         </div>
     );
 }
