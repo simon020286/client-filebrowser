@@ -65,6 +65,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(setVisibleDialogCopy(false));
         },
         handleSave: (event, selectedFiles) => {
+            event.preventDefault();
             dispatch(copyItems(selectedFiles));
         },
         handleGoBack: (event) => {

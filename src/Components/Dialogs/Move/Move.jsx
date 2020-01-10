@@ -66,6 +66,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch(setVisibleDialogMove(false));
         },
         handleSave: (event, selectedFiles) => {
+            event.preventDefault();
             dispatch(moveItems(selectedFiles));
         },
         handleGoBack: (event) => {
