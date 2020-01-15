@@ -5,6 +5,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux';
+import { setErrorMessage } from '../../Actions/Actions';
+
 
 const styles = theme => ({
   close: {
@@ -46,20 +48,18 @@ DynamicSnackbar.propTypes = {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const { main } = state;
     return {
-        open: !!state.errorMsg,
-        errorMsg: state.errorMsg,
-        notificationDuration: state.notificationDuration || 60000
+        open: !!main.errorMsg,
+        errorMsg: main.errorMsg,
+        notificationDuration: main.notificationDuration || 6000
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         handleClose: (event) => {
-            dispatch({
-                type: 'SET_ERROR_MSG',
-                value: null
-            });
+            dispatch(setErrorMessage(null));
         }
     };
 };

@@ -42,9 +42,10 @@ class File extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+    const { main } = state;
     return {
-        filePath: [...state.path, ownProps.name],
-        isSelected: !!state.selectedFiles.find(f => f.name === ownProps.name)
+        filePath: [...main.path, ownProps.name],
+        isSelected: !!main.selectedFiles.find(f => f.name === ownProps.name)
     };
 };
 

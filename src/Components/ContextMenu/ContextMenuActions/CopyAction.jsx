@@ -22,8 +22,9 @@ function CopyAction(props) {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     return {
-        selectedFiles: state.selectedFiles
+        selectedFiles: main.selectedFiles
     };
 };
 

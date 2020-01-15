@@ -70,9 +70,10 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     return {
-        open: state.visibleDialogEdit,
-        blobUrl: state.fileContentBlobUrl
+        open: main.visibleDialogEdit,
+        blobUrl: main.fileContentBlobUrl
     };
 };
 

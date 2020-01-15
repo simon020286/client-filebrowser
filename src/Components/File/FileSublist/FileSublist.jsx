@@ -41,9 +41,10 @@ class FileSublist extends Component {
 
 
 const mapStateToProps = (state, ownProps) => {
+    const { main } = state;
     return {
-        filePath: [...state.path, ownProps.name],
-        isSelected: state.selectedFolderSublist && (state.selectedFolderSublist.name === ownProps.name)
+        filePath: [...main.path, ownProps.name],
+        isSelected: main.selectedFolderSublist && (main.selectedFolderSublist.name === ownProps.name)
     };
 };
 

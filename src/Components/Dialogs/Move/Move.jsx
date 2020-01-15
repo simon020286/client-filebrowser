@@ -45,17 +45,18 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     // prevent moving to same folder
-    const canMove = state.path.join('') !== state.pathSublist.join('') + (state.selectedFolderSublist ? state.selectedFolderSublist.name : '');
+    const canMove = main.path.join('') !== main.pathSublist.join('') + (main.selectedFolderSublist ? main.selectedFolderSublist.name : '');
 
     return {
-        open: state.visibleDialogMove,
-        selectedFolderSublist: state.selectedFolderSublist,
-        selectedPath: state.selectedFolderSublist ? [...state.pathSublist, state.selectedFolderSublist.name] : [],
-        selectedFiles: state.selectedFiles,
-        pathSublist: state.pathSublist,
-        canGoBack: state.pathSublist.length,
-        canMove: state.selectedFolderSublist && canMove
+        open: main.visibleDialogMove,
+        selectedFolderSublist: main.selectedFolderSublist,
+        selectedPath: main.selectedFolderSublist ? [...main.pathSublist, main.selectedFolderSublist.name] : [],
+        selectedFiles: main.selectedFiles,
+        pathSublist: main.pathSublist,
+        canGoBack: main.pathSublist.length,
+        canMove: main.selectedFolderSublist && canMove
     };
 };
 

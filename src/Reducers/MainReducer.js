@@ -1,30 +1,4 @@
-export const defaultState = {
-    path: [],
-    pathSublist: [],
-    fileList: [],
-    fileListSublist: [],
-    fileListFilter: null,
-    contextMenuVisible: null,
-    contextMenuPosition: [],
-    contextMenuPositionElement: null,
-    selectedFiles: [],
-    selectedFolderSublist: null,
-    loading: false,
-    loadingSublist: false,
-    errorMsg: null,
-    visibleDialogCreateFolder: false,
-    visibleDialogUploadFile: false,
-    visibleDialogContent: false,
-    visibleDialogEdit: false,
-    visibleDialogMove: false,
-    visibleDialogCopy: false,
-    visibleDialogRename: false,
-    visibleDialogTask: false,
-    fileContentBlobUrl: null,
-    fileUploadProgress: 0,
-    fileUploadList: [],
-    taskList: []
-};
+import { defaultState } from './state';
 
 /**
  * Main content reducer
@@ -159,7 +133,6 @@ const MainReducer = (state = defaultState, action) => {
             return Object.assign({}, state, { 
                 fileContentBlobUrl: action.value ? URL.createObjectURL(action.value) : null
             });
-
         default:
             return state;
     }

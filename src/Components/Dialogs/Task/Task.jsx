@@ -37,9 +37,10 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     return {
-        open: state.visibleDialogTask,
-        taskList: state.taskList
+        open: main.visibleDialogTask,
+        taskList: main.taskList
     };
 };
 

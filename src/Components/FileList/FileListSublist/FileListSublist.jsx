@@ -23,14 +23,15 @@ class FileListSublist extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const filteredList = state.fileListSublist
+    const { main } = state;
+    const filteredList = main.fileListSublist
         .filter(file => file.type === 'dir')
-        .filter(file => state.path.join('').trim() === state.pathSublist.join('').trim() ? 
-            !state.selectedFiles.find(f => f.name === file.name) : true
+        .filter(file => main.path.join('').trim() === main.pathSublist.join('').trim() ? 
+            !main.selectedFiles.find(f => f.name === file.name) : true
         );
     return {
         fileList: filteredList,
-        loadingSublist: state.loadingSublist,
+        loadingSublist: main.loadingSublist,
     };
 };
 

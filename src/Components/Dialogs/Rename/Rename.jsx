@@ -52,9 +52,10 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     return {
-        open: state.visibleDialogRename,
-        realName: state.selectedFiles.length ? state.selectedFiles[0].name : ''
+        open: main.visibleDialogRename,
+        realName: main.selectedFiles.length ? main.selectedFiles[0].name : ''
     };
 };
 

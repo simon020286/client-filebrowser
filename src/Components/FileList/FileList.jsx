@@ -24,12 +24,13 @@ class FileList extends Component {
 
 
 const mapStateToProps = (state) => {
-    const filteredList = state.fileList.filter(
-        file => state.fileListFilter ? file.name.toLocaleLowerCase().match(state.fileListFilter.toLocaleLowerCase()) : true
+    const { main } = state;
+    const filteredList = main.fileList.filter(
+        file => main.fileListFilter ? file.name.toLocaleLowerCase().match(main.fileListFilter.toLocaleLowerCase()) : true
     );
     return {
         fileList: filteredList,
-        loading: state.loading
+        loading: main.loading
     };
 };
 

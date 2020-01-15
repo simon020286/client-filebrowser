@@ -120,11 +120,12 @@ SearchAppBar.propTypes = {
 
 
 const mapStateToProps = (state) => {
-    return {
-        value: state.fileListFilter || '',
-        path: state.path,
-        canGoBack: state.path.length
-    };
+  const { main } = state;
+  return {
+      value: main.fileListFilter || '',
+      path: main.path,
+      canGoBack: main.path.length
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -35,9 +35,10 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const { main } = state;
     return {
-        createFolderName: state.createFolderName,
-        open: state.visibleDialogCreateFolder
+        createFolderName: main.createFolderName,
+        open: main.visibleDialogCreateFolder
     };
 };
 

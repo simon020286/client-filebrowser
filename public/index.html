@@ -44,20 +44,6 @@
         </style>
     </head>
     <body>
-        <script>
-            if (window["WebSocket"]) {
-                conn = new WebSocket("ws://localhost:8080/ws");
-                conn.onclose = function (evt) {
-                    console.log(evt);
-                };
-                conn.onmessage = function (evt) {
-                    var message = JSON.parse(evt.data);
-                    console.log(message);
-                };
-            } else {
-                console.log("Errore");
-            }
-        </script>
         <div id="root">
             <div class="asset-loader"></div>
         </div>

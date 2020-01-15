@@ -45,16 +45,17 @@ class FormDialog extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     // prevent copying to same folder
-    const canCopy = state.path.join('') !== state.pathSublist.join('') + (state.selectedFolderSublist ? state.selectedFolderSublist.name : '');
+    const canCopy = main.path.join('') !== main.pathSublist.join('') + (main.selectedFolderSublist ? main.selectedFolderSublist.name : '');
 
     return {
-        open: state.visibleDialogCopy,
-        selectedFolderSublist: state.selectedFolderSublist,
-        selectedPath: state.selectedFolderSublist ? [...state.pathSublist, state.selectedFolderSublist.name] : [],
-        canGoBack: state.pathSublist.length,
-        canCopy: state.selectedFolderSublist && canCopy,
-        selectedFiles: state.selectedFiles
+        open: main.visibleDialogCopy,
+        selectedFolderSublist: main.selectedFolderSublist,
+        selectedPath: main.selectedFolderSublist ? [...main.pathSublist, main.selectedFolderSublist.name] : [],
+        canGoBack: main.pathSublist.length,
+        canCopy: main.selectedFolderSublist && canCopy,
+        selectedFiles: main.selectedFiles
     };
 };
 

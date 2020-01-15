@@ -17,10 +17,7 @@ export const uploadFiles = (fileList) => (dispatch, getState) => {
         }, 300);
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -30,19 +27,16 @@ export const uploadFiles = (fileList) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const refreshFileList = () => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setLoading(true));
     dispatch(setSelectedFiles([]));
 
-    APIHandler.getFileList(path.join('/')).then(r => {
+    APIHandler.getFileList(main.path.join('/')).then(r => {
         dispatch(setLoading(false));
         dispatch(setFileList(r));
     }).catch(r => {
         dispatch(setFileList([]));
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -56,10 +50,7 @@ export const refreshTaskList = () => (dispatch, getState) => {
         dispatch(setTaskList(r));
     }).catch(r => {
         dispatch(setTaskList([]));
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        })
+        dispatch(setErrorMessage(r.toString()));
     })
 }
 
@@ -68,19 +59,16 @@ export const refreshTaskList = () => (dispatch, getState) => {
  * @returns {Function}
  */
 export const refreshFileListSublist = () => (dispatch, getState) => {
-    const { pathSublist } = getState();
+    const { main } = getState();
     dispatch(setLoadingSublist(true));
     dispatch(setSelectedFolderSublist(null));
 
-    APIHandler.getFileList(pathSublist.join('/')).then(r => {
+    APIHandler.getFileList(main.pathSublist.join('/')).then(r => {
         dispatch(setLoadingSublist(false));
         dispatch(setFileListSublist(r));
     }).catch(r => {
         dispatch(setFileListSublist([]));
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoadingSublist(false));
     });
 };
@@ -92,19 +80,16 @@ export const refreshFileListSublist = () => (dispatch, getState) => {
  * @returns {Function}
  */
 export const getFileContent = (fileName) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
 
     dispatch(setLoading(true));
     dispatch(setFileContent(null));
     dispatch(setVisibleDialogContent(true));
-    APIHandler.getFileBody(path.join('/'), fileName).then(blob => {
+    APIHandler.getFileBody(main.path.join('/'), fileName).then(blob => {
         dispatch(setFileContent(blob));
         dispatch(setLoading(false));
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -115,17 +100,14 @@ export const getFileContent = (fileName) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const renameItem = (fileName, newFileName) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setLoading(true));
-    APIHandler.renameItem(path.join('/'), fileName, newFileName).then(blob => {
+    APIHandler.renameItem(main.path.join('/'), fileName, newFileName).then(blob => {
         dispatch(setVisibleDialogRename(false));
         dispatch(setLoading(false));
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -136,9 +118,9 @@ export const renameItem = (fileName, newFileName) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const downloadFile = (fileName) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setLoading(true));
-    APIHandler.getFileBody(path.join('/'), fileName).then(blob => {
+    APIHandler.getFileBody(main.path.join('/'), fileName).then(blob => {
         // TODO workaround large files disables ui for long time
         const blobUrl = window.URL.createObjectURL(blob);
         let tempLink = window.document.createElement('a');
@@ -148,10 +130,7 @@ export const downloadFile = (fileName) => (dispatch, getState) => {
         window.URL.revokeObjectURL(blobUrl);
         dispatch(setLoading(false));
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -162,18 +141,15 @@ export const downloadFile = (fileName) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const getFileContentForEdit = (fileName) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setLoading(true));
     dispatch(setFileContent(null));
     dispatch(setVisibleDialogEdit(true));
-    APIHandler.getFileBody(path.join('/'), fileName).then(blob => {
+    APIHandler.getFileBody(main.path.join('/'), fileName).then(blob => {
         dispatch(setFileContent(blob));
         dispatch(setLoading(false));
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -185,18 +161,15 @@ export const getFileContentForEdit = (fileName) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const createNewFolder = (createFolderName) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setLoading(true));
 
-    APIHandler.createFolder(path.join('/'), createFolderName).then(r => {
+    APIHandler.createFolder(main.path.join('/'), createFolderName).then(r => {
         dispatch(setVisibleDialogCreateFolder(false));
         dispatch(setLoading(false));
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -208,18 +181,15 @@ export const createNewFolder = (createFolderName) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const removeItems = (files) => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     const filenames = files.map(f => f.name);
 
     dispatch(setLoading(true));
-    APIHandler.removeItems(path.join('/'), filenames).then(r => {
+    APIHandler.removeItems(main.path.join('/'), filenames).then(r => {
         dispatch(setLoading(false));
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -231,20 +201,17 @@ export const removeItems = (files) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const moveItems = (files) => (dispatch, getState) => {
-    const { path, pathSublist, selectedFolderSublist } = getState();
-    const destination = pathSublist.join('/') + '/' + selectedFolderSublist.name;
+    const { main } = getState();
+    const destination = main.pathSublist.join('/') + '/' + main.selectedFolderSublist.name;
     const filenames = files.map(f => f.name);
 
     dispatch(setLoading(true));
-    APIHandler.moveItems(path.join('/'), destination, filenames).then(r => {
+    APIHandler.moveItems(main.path.join('/'), destination, filenames).then(r => {
         dispatch(setLoading(false));
         dispatch(setVisibleDialogMove(false));
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -256,20 +223,17 @@ export const moveItems = (files) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const copyItems = (files) => (dispatch, getState) => {
-    const { path, pathSublist, selectedFolderSublist } = getState();
-    const destination = pathSublist.join('/') + '/' + selectedFolderSublist.name;
+    const { main } = getState();
+    const destination = main.pathSublist.join('/') + '/' + main.selectedFolderSublist.name;
     const filenames = files.map(f => f.name);
 
     dispatch(setLoading(true));
-    APIHandler.copyItems(path.join('/'), destination, filenames).then(r => {
+    APIHandler.copyItems(main.path.join('/'), destination, filenames).then(r => {
         dispatch(setLoading(false));
         dispatch(setVisibleDialogCopy(false));
         dispatch(refreshFileList());
     }).catch(r => {
-        dispatch({
-            type: 'SET_ERROR_MSG',
-            value: r.toString()
-        });
+        dispatch(setErrorMessage(r.toString()));
         dispatch(setLoading(false));
     });
 };
@@ -280,23 +244,23 @@ export const copyItems = (files) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const setSelectedFileFromLastTo = (lastFile) => (dispatch, getState) => {
-    const { fileList, selectedFiles } = getState();
+    const { main } = getState();
 
-    const lastPreviouslySelected = [...selectedFiles].pop();
-    const lastPreviouslySelectedIndex = fileList.indexOf(fileList.find(f => f.name === lastPreviouslySelected.name))
-    const lastSelectedIndex = fileList.indexOf(fileList.find(f => f.name === lastFile.name))
+    const lastPreviouslySelected = [...main.selectedFiles].pop();
+    const lastPreviouslySelectedIndex = main.fileList.indexOf(main.fileList.find(f => f.name === lastPreviouslySelected.name))
+    const lastSelectedIndex = main.fileList.indexOf(main.fileList.find(f => f.name === lastFile.name))
 
     let toAdd = [];
     if (lastSelectedIndex > lastPreviouslySelectedIndex) {
-        toAdd = fileList.filter((index, element) => {
-            return fileList.indexOf(index) <= lastSelectedIndex && fileList.indexOf(index) >= lastPreviouslySelectedIndex
+        toAdd = main.fileList.filter((index, element) => {
+            return main.fileList.indexOf(index) <= lastSelectedIndex && main.fileList.indexOf(index) >= lastPreviouslySelectedIndex
         });
     } else {
-        toAdd = fileList.filter((index, element) => {
-            return fileList.indexOf(index) >= lastSelectedIndex && fileList.indexOf(index) <= lastPreviouslySelectedIndex
+        toAdd = main.fileList.filter((index, element) => {
+            return main.fileList.indexOf(index) >= lastSelectedIndex && main.fileList.indexOf(index) <= lastPreviouslySelectedIndex
         });
     }
-    dispatch(setSelectedFiles([...selectedFiles, ...toAdd]));
+    dispatch(setSelectedFiles([...main.selectedFiles, ...toAdd]));
 };
 
 
@@ -304,10 +268,10 @@ export const setSelectedFileFromLastTo = (lastFile) => (dispatch, getState) => {
  * @returns {Function}
  */
 export const initSubList = () => (dispatch, getState) => {
-    const { path } = getState();
+    const { main } = getState();
     dispatch(setSelectedFolderSublist(null));
     dispatch(setFileListSublist([]));    
-    dispatch(setPathSublist([...path]));
+    dispatch(setPathSublist([...main.path]));
     dispatch(refreshFileListSublist());
 };
 
@@ -323,23 +287,23 @@ export const resetTaskDialog = () => (dispatch, getState) => {
 }
 
 export const enterToPreviousDirectory = () => (dispatch, getState) => {
-    const { path } = getState();
-    dispatch(setPath(path.slice(0, -1)));
+    const { main } = getState();
+    dispatch(setPath(main.path.slice(0, -1)));
     dispatch(setFileListFilter(null));
     dispatch(refreshFileList());
 };
 
 export const enterToPreviousDirectoryByIndex = (index) => (dispatch, getState) => {
-    const { path } = getState();
-    const newPath = [...path].slice(0, ++index);
+    const { main } = getState();
+    const newPath = [...main.path].slice(0, ++index);
     dispatch(setPath(newPath));
     dispatch(refreshFileList());
     dispatch(setFileListFilter(null));
 };
 
 export const enterToPreviousDirectorySublist = () => (dispatch, getState) => {
-    const { pathSublist } = getState();
-    dispatch(setPathSublist(pathSublist.slice(0, -1)));
+    const { main } = getState();
+    dispatch(setPathSublist(main.pathSublist.slice(0, -1)));
     dispatch(refreshFileListSublist());
 };
 
@@ -445,8 +409,8 @@ export const toggleSelectedFile = (file) => {
 };
 
 export const rightClickOnFile = (file) => (dispatch, getState) => {
-    const { selectedFiles } = getState();
-    const isSelected = selectedFiles.indexOf(selectedFiles.find(f => f.name === file.name)) !== -1;
+    const { main } = getState();
+    const isSelected = main.selectedFiles.indexOf(main.selectedFiles.find(f => f.name === file.name)) !== -1;
 
     !isSelected && dispatch(setSelectedFiles([file]));
 };
@@ -541,3 +505,17 @@ export const setFileUploadList = (files) => {
         value: files
     };
 };
+
+export const setErrorMessage = (message) => {
+    return {
+        type: 'SET_ERROR_MSG',
+        value: message
+    }
+}
+
+export const closeNotification = (id) => {
+    return {
+        type: 'CLOSE_NOTIFICATION',
+        value: id
+    }
+}

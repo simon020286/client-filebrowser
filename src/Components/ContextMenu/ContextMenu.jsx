@@ -61,11 +61,12 @@ class ContextMenu extends Component {
 }
 
 const mapStateToProps = (state) => {
+    const { main } = state;
     return {
-        x: state.contextMenuPosition[0] || 0,
-        y: state.contextMenuPosition[1] || 0,
-        visible: !!state.contextMenuVisible,
-        acts: getActionsByMultipleFiles(state.selectedFiles),
+        x: main.contextMenuPosition[0] || 0,
+        y: main.contextMenuPosition[1] || 0,
+        visible: !!main.contextMenuVisible,
+        acts: getActionsByMultipleFiles(main.selectedFiles),
     };
 };
 

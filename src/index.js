@@ -2,13 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux'
-import MainReducer from './Reducers/MainReducer'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import {MainReducer, NotificationReducer} from './Reducers';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 import './index.css';
+import reduxWebsocket from '@giantmachines/redux-websocket';
 
-const store = createStore(MainReducer, applyMiddleware(thunk));
+const reduxWebsocketMiddleware = reduxWebsocket();
+
+const store = createStore(
+    combineReducers({
+        main: MainReducer,
+        notification: NotificationReducer
+    }), 
+    applyMiddleware(thunk, reduxWebsocketMiddleware));
+
 ReactDOM.render(
     <Provider store={store}>
         <App />
